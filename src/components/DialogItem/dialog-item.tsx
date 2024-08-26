@@ -23,7 +23,7 @@ const DialogItem = React.forwardRef(function DialogItem(props: Props, forwardedR
             onSelect && onSelect();
           }}
         >
-          {triggerChildren}
+          <div className="rounded-lg p-2 border border-black dark:border-white w-full text-center">{triggerChildren}</div>
         </DropdownMenu.Item>
       </Dialog.Trigger>
       <Dialog.Portal>

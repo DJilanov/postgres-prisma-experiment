@@ -3,7 +3,7 @@
 import { z } from 'zod';
 import { schema } from '@/schemas/saveNotification';
 import { response } from '@/lib/utils';
-import { INotificationTypeEnum } from '@/interfaces/notification';
+import { PostNotification } from '@/db/postNotification';
  
 export const saveNotification = async (payload: z.infer<typeof schema>) => {
   const validation = schema.safeParse(payload);
@@ -17,14 +17,10 @@ export const saveNotification = async (payload: z.infer<typeof schema>) => {
       }
     });
   }
+  const createdNotification = await PostNotification(payload);
   return response({
     success: true,
     code: 200,
-    data: {
-      id: 'TODO',
-      name: 'TODO',
-      type: 'comment_tag' as INotificationTypeEnum,
-      seen: false
-    }
+    data: createdNotification,
   });
 }
