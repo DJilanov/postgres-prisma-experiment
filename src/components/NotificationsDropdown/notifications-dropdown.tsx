@@ -1,6 +1,6 @@
 "use client";
 
-import React, { startTransition, useRef, useState } from 'react';
+import React, { startTransition, useMemo, useRef, useState } from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
@@ -24,9 +24,12 @@ interface Props {
 const NotificationsDropdown = (props: Props) => {
   const ref = useRef<HTMLElement>(null);
   const [notifications, setNotifications] = useState(props.notifications);
+  const unread = useMemo(() => {
+    return notifications.filter((n) => !n.seen).length;
+  }, notifications)
   const addNotification = (notification: INotification) => {
-    setNotifications((prev) => [...prev, notification]);
-    if(ref.current) {
+    setNotifications((prev) => [notification, ...prev]);
+    if (ref.current) {
       ref.current.click();
     }
   }
@@ -48,11 +51,17 @@ const NotificationsDropdown = (props: Props) => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <FontAwesomeIcon icon={faBell} width={14} />
+        <div className='flex flex-row'>
+          <FontAwesomeIcon className='mt-1' icon={faBell} width={14} />
+          <span className="ml-2 bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-1 rounded-full dark:bg-green-900 dark:text-green-300">{unread}</span>
+        </div>
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
-        <DropdownMenu.Content className="DropdownMenuContent p-4 min-w-96 rounded-lg bg-gray-200 dark:bg-gray-800 text-black" sideOffset={5}>
+        <DropdownMenu.Content className="DropdownMenuContent p-4 min-w-96 rounded-lg bg-gray-200 dark:bg-gray-800 text-black h-96 overflow-y-scroll" sideOffset={5}>
+          <DialogItem triggerChildren="New Notification" ref={ref}>
+            <NotificationsDialog addNotification={addNotification} />
+          </DialogItem>
           {
             notifications.length > 0 ? (
               notifications.map(n => [
@@ -62,7 +71,7 @@ const NotificationsDropdown = (props: Props) => {
                   }
                   {
                     (
-                      n.type === 'comment_tag' || 
+                      n.type === 'comment_tag' ||
                       n.type === 'access_granted' ||
                       n.type === 'join_workspace'
                     ) ? <UserInteractionNotification notification={n} /> : null
@@ -78,9 +87,6 @@ const NotificationsDropdown = (props: Props) => {
               <hr key="no-notif-hr" className="h-px my-3 bg-gray-200 border-0 dark:bg-gray-700" />
             ]
           }
-          <DialogItem triggerChildren="New Notification" ref={ref}>
-            <NotificationsDialog addNotification={addNotification} />
-          </DialogItem>
           <DropdownMenu.Arrow className="DropdownMenuArrow fill-gray-200 dark:fill-gray-800" />
         </DropdownMenu.Content>
       </DropdownMenu.Portal>

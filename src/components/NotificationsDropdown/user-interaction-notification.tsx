@@ -2,6 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { INotification } from '@/interfaces/notification';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 const RedirectEnum = {
   platform_update: '/',
@@ -38,6 +40,9 @@ const UserInteractionNotification = ({ notification }: Props) => {
       <div onClick={() => router.push(RedirectEnum[notification.type])} className='flex flex-1 w-8 h-8 items-center ml-3 pb-0.5'>
         {notification.name} {TextEnum[notification.type]}
       </div>
+      {
+        notification.seen ? null : <FontAwesomeIcon className='mt-1' icon={faBell} width={14} />
+      }
     </div>
   );
 }

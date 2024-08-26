@@ -7,9 +7,14 @@ import prisma from './';
  */
 const GetNotifications = async () => {
   const notifications = await prisma.notifications.findMany({
-    where: {
-      seen: false,
-    }
+    // where: {
+    //   seen: false,
+    // }
+    orderBy: [
+      {
+        seen: 'asc',
+      },
+    ]
   });
 	return notifications;
 }

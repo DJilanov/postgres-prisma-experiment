@@ -17,7 +17,7 @@ const DialogItem = React.forwardRef(function DialogItem(props: Props, forwardedR
         <DropdownMenu.Item
           {...itemProps}
           ref={forwardedRef as never}
-          className="flex cursor-pointer justify-center pl-0 text-black dark:text-white hover:text-gray-400"
+          className="flex cursor-pointer justify-center pl-0 text-black dark:text-white hover:text-gray-400 mb-4"
           onSelect={(event: { preventDefault: () => void; }) => {
             event.preventDefault();
             onSelect && onSelect();
