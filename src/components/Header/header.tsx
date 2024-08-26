@@ -7,6 +7,8 @@ interface Props {
 
 const Header = (props: Props) => {
   const { notifications = [] } = props;
+  const unread = notifications.filter((n) => !n.seen).length;
+  console.log('-----notifications1: ', notifications.filter(s => !s.seen).length);
 
   return (
     <header className="w-full">

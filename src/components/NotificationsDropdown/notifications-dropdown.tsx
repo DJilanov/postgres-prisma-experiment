@@ -1,48 +1,46 @@
 "use client";
 
-import React, { startTransition, useMemo, useRef, useState } from 'react';
+import React, { startTransition, useEffect, useMemo, useRef, useState } from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import { toast } from 'sonner';
 
 import { INotification } from '@/interfaces/notification';
-import NotificationsDialog from '../NotificationsDialog/notifications-dialog';
+import { markNotificationAsRead } from '@/actions/markNotificaitonAsRead';
+import { ResponseSuccess } from '@/types';
 
+import NotificationsDialog from '../NotificationsDialog/notifications-dialog';
 import DialogItem from '../DialogItem/dialog-item';
 import PlatformUpdateNotification from './platform-update-notification';
 import UserInteractionNotification from './user-interaction-notification';
-import { markNotificationAsRead } from '@/actions/markNotificaitonAsRead';
 
 import './styles.css';
-import { ResponseSuccess } from '@/types';
 
 interface Props {
   notifications: INotification[];
 }
 
-const NotificationsDropdown = (props: Props) => {
+const NotificationsDropdown = ({ notifications }: Props) => {
   const ref = useRef<HTMLElement>(null);
-  const [notifications, setNotifications] = useState(props.notifications);
+  const [notif, setNotifications] = useState(notifications);
+  useEffect(() => {
+    setNotifications(notifications);
+  }, [notifications.length])
   const unread = useMemo(() => {
-    return notifications.filter((n) => !n.seen).length;
-  }, notifications)
+    return notif.filter((n) => !n.seen).length;
+  }, [notif.length]);
   const addNotification = (notification: INotification) => {
     setNotifications((prev) => [notification, ...prev]);
     if (ref.current) {
       ref.current.click();
     }
   }
-  const updateNotification = (notification: INotification) => {
-    setNotifications((prev) => prev.map((p) => p.id === notification.id ? notification : p).filter(n => !n.seen));
-  }
   const readNotification = (id: string) => {
     startTransition(() => {
       // Prisma doesnt support enums
       markNotificationAsRead({ id })
         .then((response: ResponseSuccess<INotification | any>) => {
-          console.log('response?.data: ', response?.data);
-          updateNotification(response?.data);
           toast.success("Notification has been seen.")
         })
         .catch(() => toast.error("Something went wrong."));
@@ -63,8 +61,8 @@ const NotificationsDropdown = (props: Props) => {
             <NotificationsDialog addNotification={addNotification} />
           </DialogItem>
           {
-            notifications.length > 0 ? (
-              notifications.map(n => [
+            notif.length > 0 ? (
+              notif.map(n => [
                 <DropdownMenu.Item onClick={() => readNotification(n.id)} key={n.id} className="text-black dark:text-white">
                   {
                     n.type === 'platform_update' ? <PlatformUpdateNotification notification={n} /> : null

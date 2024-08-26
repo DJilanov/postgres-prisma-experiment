@@ -1,16 +1,8 @@
 "use client";
 
-import { useRouter } from 'next/navigation';
 import { INotification } from '@/interfaces/notification';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
-
-const RedirectEnum = {
-  platform_update: '/',
-  comment_tag: '/comments',
-  access_granted: '/chats',
-  join_workspace: '/workspace',
-}
 
 const TextEnum = {
   platform_update: '',
@@ -31,13 +23,12 @@ interface Props {
 }
 
 const UserInteractionNotification = ({ notification }: Props) => {
-  const router = useRouter()
   return (
     <div className='flex cursor-pointer ml-2'>
       <div className='flex flex-none w-8 h-8 items-center'>
         <div className={`flex ${ColorsEnum[notification.type]} w-8 h-8 items-center justify-center rounded-full pb-1`}>{notification.name?.charAt(0)}</div>
       </div>
-      <div onClick={() => router.push(RedirectEnum[notification.type])} className='flex flex-1 w-8 h-8 items-center ml-3 pb-0.5'>
+      <div className='flex flex-1 w-8 h-8 items-center ml-3 pb-0.5'>
         {notification.name} {TextEnum[notification.type]}
       </div>
       {

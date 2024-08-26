@@ -1,9 +1,17 @@
 'use server';
  
 import { z } from 'zod';
+import { redirect, RedirectType } from 'next/navigation';
 import { schema } from '@/schemas/markNotificationAsRead';
 import { response } from '@/lib/utils';
 import { PatchNotificationToSeen } from '@/db/patchNotificationToSeen';
+
+const RedirectEnum = {
+  platform_update: '/',
+  comment_tag: '/comments',
+  access_granted: '/chats',
+  join_workspace: '/workspace',
+}
  
 export const markNotificationAsRead = async (payload: z.infer<typeof schema>) => {
   const validation = schema.safeParse(payload);
@@ -18,9 +26,14 @@ export const markNotificationAsRead = async (payload: z.infer<typeof schema>) =>
     });
   }
   const updatedNotification = await PatchNotificationToSeen(payload.id);
-  return response({
-    success: true,
-    code: 200,
-    data: updatedNotification
-  });
+  if(updatedNotification.type !== 'platform_update') {
+    console.log('redirect to: ', RedirectEnum[updatedNotification.type as never]);
+    redirect(RedirectEnum[updatedNotification.type as never], RedirectType.replace);
+  } else {
+    return response({
+      success: true,
+      code: 200,
+      data: updatedNotification
+    });
+  }
 }

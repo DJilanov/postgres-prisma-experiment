@@ -110,6 +110,7 @@ Visit [http://localhost:3000](http://localhost:3000) in your browser to see the 
 |   |-- lib/                # Shared utils
 |   |-- schemas/            # Schemas used from Zod
 |   |-- types/              # Communication types
+|   |-- server/             # TRPC client used for communication
 |-- .env                    # Environment variables
 |-- package.json            # Project dependencies and scripts
 |-- README.md               # Project documentation
