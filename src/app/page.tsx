@@ -1,8 +1,9 @@
 import Header from "@/components/Header/header";
-import { GetNotifications } from "@/db/getNotifications";
+import { INotification } from "@/interfaces/notification";
+import { caller } from '@/server/trpc';
 
 const getData = async () => {
-	const notifications: any[] = await GetNotifications();
+  const notifications = await caller.getNotifications() as INotification[];
 
 	return {
     notifications,
@@ -24,3 +25,5 @@ export default async function Home() {
     </main>
   );
 }
+
+export const dynamic = "force-dynamic";
