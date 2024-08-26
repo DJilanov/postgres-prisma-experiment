@@ -23,24 +23,30 @@ interface Props {
 
 const NotificationsDropdown = ({ notifications }: Props) => {
   const ref = useRef<HTMLElement>(null);
-  const [notif, setNotifications] = useState(notifications);
   useEffect(() => {
     setNotifications(notifications);
-  }, [notifications.length])
+  }, [notifications])
+  const [notif, setNotifications] = useState(notifications);
   const unread = useMemo(() => {
     return notif.filter((n) => !n.seen).length;
-  }, [notif.length]);
+  }, [notif]);
   const addNotification = (notification: INotification) => {
     setNotifications((prev) => [notification, ...prev]);
     if (ref.current) {
       ref.current.click();
     }
   }
+  const updateNotification = (notification: INotification) => {
+    setNotifications((prev) => prev.map((p) => p.id === notification.id ? notification : p));
+  }
   const readNotification = (id: string) => {
     startTransition(() => {
       // Prisma doesnt support enums
       markNotificationAsRead({ id })
         .then((response: ResponseSuccess<INotification | any>) => {
+          if(response?.data) {
+            updateNotification(response?.data);
+          }
           toast.success("Notification has been seen.")
         })
         .catch(() => toast.error("Something went wrong."));
