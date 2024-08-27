@@ -38,7 +38,7 @@ const UserInteractionNotification = ({ notification }: Props) => {
       <div className='flex flex-none w-8 h-8 items-center'>
         <div className={`flex ${ColorsEnum[notification.type]} w-8 h-8 items-center justify-center rounded-full pb-1`}>{notification.name?.charAt(0)}</div>
       </div>
-      <div className='flex flex-1 w-8 h-8 items-center ml-3 pb-0.5'>
+      <div className='flex flex-1 w-8 min-h-8 items-center ml-3 pb-0.5'>
         {notification.name} {TextEnum[notification.type]}
       </div>
       {
