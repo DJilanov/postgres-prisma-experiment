@@ -41,7 +41,7 @@ const DialogItem = React.forwardRef(function DialogItem(props: Props, forwardedR
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="DialogOverlay inset-0 bg-gray-600 dark:bg-gray-800 fixed opacity-90" />
-        <Dialog.Content className="DialogContent max-w-5/6-full-w max-h-5/6-full-h min-w-[32rem] p-6 rounded bg-gray-300 dark:bg-gray-800 fixed">
+        <Dialog.Content className="DialogContent max-w-5/6-full-w max-h-5/6-full-h min-w-[16rem] lg:min-w-[32rem] p-6 rounded bg-gray-300 dark:bg-gray-800 fixed">
           {children}
         </Dialog.Content>
       </Dialog.Portal>
