@@ -73,7 +73,7 @@ const NotificationsDropdown = ({ notifications }: Props) => {
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
-        <DropdownMenu.Content className="DropdownMenuContent p-4 min-w-96 rounded-lg bg-gray-200 dark:bg-gray-800 text-black h-96 overflow-y-scroll" sideOffset={5}>
+        <DropdownMenu.Content className="DropdownMenuContent p-4 min-w-5/6-full-w sm:min-w-96 max-w-full rounded-lg bg-gray-200 dark:bg-gray-800 text-black h-96 overflow-y-scroll" sideOffset={5}>
           <DialogItem triggerChildren="New Notification" ref={ref}>
             <NotificationsDialog addNotification={addNotification} />
           </DialogItem>
