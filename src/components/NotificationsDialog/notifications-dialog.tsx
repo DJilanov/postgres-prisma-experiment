@@ -18,6 +18,17 @@ interface Props {
   addNotification: (data: INotification) => void;
 }
 
+/**
+ * A dialog component for creating and submitting notifications.
+ * 
+ * This component renders a form that allows users to create a notification by selecting a type and providing the necessary information.
+ * The form is validated using `react-hook-form` and Zod schema validation.
+ * Upon submission, the notification is saved and the `addNotification` callback is called to update the state.
+ * 
+ * @param {Props} props - The properties for the NotificationsDialog component.
+ * @param {(data: INotification) => void} props.addNotification - Callback function to add the created notification to the state.
+ * @returns {JSX.Element} - A React component that renders the notification creation dialog.
+ */
 const NotificationsDialog = ({ addNotification }: Props) => {
   const [type, setType] = useState(null);
   const { register, handleSubmit } = useForm<INotificationForm>({

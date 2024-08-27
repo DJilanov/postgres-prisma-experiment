@@ -8,6 +8,16 @@ interface Props {
   notification: INotification;
 }
 
+/**
+ * A component for displaying platform update notifications.
+ * 
+ * This component renders a notification for platform updates with a robot icon and a description.
+ * It also displays a bell icon if the notification has not been seen.
+ * 
+ * @param {Props} props - The properties for the PlatformUpdateNotification component.
+ * @param {INotification} props.notification - The notification object to be displayed.
+ * @returns {JSX.Element} - A React component that renders a platform update notification.
+ */
 const PlatformUpdateNotification = ({ notification }: Props) => (
   <div className='flex cursor-pointer ml-2'>
     <div className='flex flex-none w-8 h-8 items-center'>

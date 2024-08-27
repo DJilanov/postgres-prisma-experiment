@@ -22,6 +22,16 @@ interface Props {
   notification: INotification;
 }
 
+/**
+ * A component for displaying user interaction notifications.
+ * 
+ * This component renders a notification with a colored indicator and a description based on the type of notification.
+ * It also shows an icon if the notification has not been seen.
+ * 
+ * @param {Props} props - The properties for the UserInteractionNotification component.
+ * @param {INotification} props.notification - The notification object to be displayed.
+ * @returns {JSX.Element} - A React component that renders a user interaction notification.
+ */
 const UserInteractionNotification = ({ notification }: Props) => {
   return (
     <div className='flex cursor-pointer ml-2'>

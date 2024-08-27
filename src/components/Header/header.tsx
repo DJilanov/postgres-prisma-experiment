@@ -5,10 +5,18 @@ interface Props {
   notifications: INotification[];
 }
 
+/**
+ * A header component that includes a navigation bar and a notifications dropdown.
+ * 
+ * This component displays a navigation bar with a site title and a dropdown for notifications.
+ * The notifications are passed as props and rendered within the `NotificationsDropdown` component.
+ * 
+ * @param {Props} props - The properties for the Header component.
+ * @param {INotification[]} props.notifications - An array of notification objects to be displayed in the dropdown.
+ * @returns {JSX.Element} - A React component that renders the header with a navigation bar and notifications dropdown.
+ */
 const Header = (props: Props) => {
   const { notifications = [] } = props;
-  const unread = notifications.filter((n) => !n.seen).length;
-  console.log('-----notifications1: ', notifications.filter(s => !s.seen).length);
 
   return (
     <header className="w-full">

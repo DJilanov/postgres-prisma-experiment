@@ -4,7 +4,6 @@ import { caller } from "@/server/trpc";
 
 const getData = async () => {
   const notifications = await caller.getNotifications() as INotification[];
-  console.log('-----notifications0: ', notifications.filter(s => !s.seen).length);
 
 	return {
     notifications,

@@ -9,6 +9,19 @@ interface Props {
   onOpenChange?: () => void;
 }
 
+/**
+ * A custom dialog item component that wraps a dropdown menu item with a dialog trigger.
+ * 
+ * This component renders a dropdown menu item that, when selected, triggers a dialog.
+ * The dialog contains the children passed to the component.
+ * 
+ * @param {Props} props - The properties for the DialogItem component.
+ * @param {string} props.triggerChildren - The content to be displayed inside the dropdown menu item, which triggers the dialog.
+ * @param {ReactNode} props.children - The content to be displayed inside the dialog.
+ * @param {() => void} [props.onSelect] - Optional callback function to be executed when the dropdown item is selected.
+ * @param {() => void} [props.onOpenChange] - Optional callback function to be executed when the dialog's open state changes.
+ * @returns {JSX.Element} - A React component that displays a dialog triggered by a dropdown menu item.
+ */
 const DialogItem = React.forwardRef(function DialogItem(props: Props, forwardedRef) {
   const { triggerChildren, children, onSelect, onOpenChange, ...itemProps } = props;
   return (

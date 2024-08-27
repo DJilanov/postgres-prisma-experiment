@@ -21,6 +21,17 @@ interface Props {
   notifications: INotification[];
 }
 
+/**
+ * A dropdown component that displays notifications and allows users to interact with them.
+ * 
+ * This component renders a bell icon with a count of unread notifications. When clicked, it opens a dropdown
+ * menu that displays a list of notifications. The notifications can be marked as read, and new notifications can be added
+ * through a dialog triggered from within the dropdown.
+ * 
+ * @param {Props} props - The properties for the NotificationsDropdown component.
+ * @param {INotification[]} props.notifications - An array of notifications to be displayed in the dropdown.
+ * @returns {JSX.Element} - A React component that renders the notifications dropdown.
+ */
 const NotificationsDropdown = ({ notifications }: Props) => {
   const ref = useRef<HTMLElement>(null);
   useEffect(() => {
